@@ -7,8 +7,10 @@ import manager.impl.ProductManager;
 import java.util.Scanner;
 
 public class MenuUser {
-    Cart cart = Cart.getInstance();
+
     public void menu(ProductManager productManager) {
+        Scanner scanner = new Scanner(System.in);
+        Cart cart = Cart.getInstance(scanner);
         int choice;
         do {
             System.out.println("Menu");
@@ -54,7 +56,6 @@ public class MenuUser {
                 case 10:
                     cart.displayCart();
                     break;
-
             }
         } while (choice != 0);
     }
