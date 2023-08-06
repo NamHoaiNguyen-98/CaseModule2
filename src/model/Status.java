@@ -32,6 +32,6 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-10d%-20s",id,name);
+        return String.format("%-3d:%-12s",id, name);
     }
 }

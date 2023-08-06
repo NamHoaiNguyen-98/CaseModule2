@@ -10,7 +10,7 @@ public class MenuAdmin {
         MenuProduct menuProduct = new MenuProduct();
         int choice;
         do {
-            System.out.println("Menu");
+            System.out.println("Menu-------------------------------------------");
             System.out.println("1. Menu product");
             System.out.println("2. Menu category");
             System.out.println("3. Menu status");

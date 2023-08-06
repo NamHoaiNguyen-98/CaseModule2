@@ -1,12 +1,18 @@
 package model;
 
+import manager.impl.ProductManager;
+
 import java.io.Serializable;
 
 public class Product implements Serializable {
     private int id;
     private Status status;
     private String name;
-    private Configuration configuration;
+    private String cpu;
+    private String ram;
+    private String hardDrive;
+    private String cardVga;
+    private String screen;
     private String color;
     private int quantity;
     private double price;
@@ -15,11 +21,17 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(int id, Status status, String name, Configuration configuration, String color, int quantity, double price, Category category) {
+    public Product(int id, Status status, String name, String cpu,
+                   String ram, String hardDrive, String cardVga, String screen,
+                   String color, int quantity, double price, Category category) {
         this.id = id;
         this.status = status;
         this.name = name;
-        this.configuration = configuration;
+        this.cpu = cpu;
+        this.ram = ram;
+        this.hardDrive = hardDrive;
+        this.cardVga = cardVga;
+        this.screen = screen;
         this.color = color;
         this.quantity = quantity;
         this.price = price;
@@ -50,12 +62,44 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Configuration getConfiguration() {
-        return configuration;
+    public String getCpu() {
+        return cpu;
     }
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
+    }
+
+    public String getRam() {
+        return ram;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public String getHardDrive() {
+        return hardDrive;
+    }
+
+    public void setHardDrive(String hardDrive) {
+        this.hardDrive = hardDrive;
+    }
+
+    public String getCardVga() {
+        return cardVga;
+    }
+
+    public void setCardVga(String cardVga) {
+        this.cardVga = cardVga;
+    }
+
+    public String getScreen() {
+        return screen;
+    }
+
+    public void setScreen(String screen) {
+        this.screen = screen;
     }
 
     public String getColor() {
@@ -90,8 +134,16 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public void decreaseQuantity(int quantity) {
+        if (this.quantity >= quantity) {
+            this.quantity -= quantity;
+        } else {
+            System.out.println("Sorry, this product is out of stock");
+        }
+    }
+
     @Override
     public String toString() {
-        return String.format("%-5d%-12s%-23s%-29s%-10s%-15s%-32s%-22s%-13s%-10d%-15.0f%-10s",id,status.getName(),name,configuration.getCpu(),configuration.getRam(),configuration.getHardDrive(),configuration.getCardVga(),configuration.getScreen(),color,quantity,price,category.getName());
+        return String.format("%-3d%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12d%-13.0f%-10s", id, status.getName(), name, cpu, ram, hardDrive, cardVga, screen, color, quantity, price, category.getName());
     }
 }

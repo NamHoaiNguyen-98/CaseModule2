@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class AccountManager implements Serializable {
     private List<Account> accountList;
     private final Scanner scanner;
-
-    //biên static currentUser
     private static AccountManager accountManager;
     private final String regex = "^\\w+$";
     String path = "D:\\CaseModule2\\src\\file\\Account.txt";
@@ -100,12 +98,12 @@ public class AccountManager implements Serializable {
         }
     }
 
-    public String getUsername() {
+
+    public Account getAccount() {
         for (Account account : accountList) {
             if (account.isLogin()) {
-                return account.getUsername();
+                return account;
             }
-        }
-        return "";
+        } return null;
     }
 }

@@ -10,7 +10,7 @@ public class MenuCategory {
         CategoryManager categoryManager = CategoryManager.getInstance(scanner);
         int choice;
         do {
-            System.out.println("Menu");
+            System.out.println("Menu-------------------------------------------------");
             System.out.println("1. Add category");
             System.out.println("2. Update category");
             System.out.println("3. Display all category");

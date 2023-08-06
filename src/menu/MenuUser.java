@@ -1,8 +1,10 @@
 package menu;
 
 import manager.generic.Input;
-import manager.impl.Cart;
+import manager.impl.CartManager;
 import manager.impl.ProductManager;
+import manager.impl.UserManager;
+import model.Cart;
 
 import java.util.Scanner;
 
@@ -10,7 +12,9 @@ public class MenuUser {
 
     public void menu(ProductManager productManager) {
         Scanner scanner = new Scanner(System.in);
-        Cart cart = Cart.getInstance(scanner);
+        UserManager userManager = UserManager.getInstance(scanner);
+        Cart cart = new Cart();
+
         int choice;
         do {
             System.out.println("Menu");
@@ -20,8 +24,9 @@ public class MenuUser {
             System.out.println("4. Search product by name");
             System.out.println("5. Search product by price");
             System.out.println("6. Search product by color");
-            System.out.println("7. Display all product price min");
-            System.out.println("8. Display all product price max");
+            System.out.println("7. Display product sort by price");
+            System.out.println("8. Buy product by ID");
+            System.out.println("9. Display your Cart");
             System.out.println("0. Exit");
             System.out.println("Enter your choice: ");
             choice = Input.inputInt();
@@ -45,16 +50,16 @@ public class MenuUser {
                     productManager.searchByColor();
                     break;
                 case 7:
-                    productManager.displayMinPrice();
+                    productManager.displaySortByPrice();
                     break;
                 case 8:
-                    productManager.displayMaxPrice();
+                    userManager.create(cart);
                     break;
                 case 9:
-                    cart.getCartList();
+                    userManager.display();
                     break;
                 case 10:
-                    cart.displayCart();
+                    productManager.displaySortByID();
                     break;
             }
         } while (choice != 0);

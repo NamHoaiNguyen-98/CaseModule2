@@ -12,7 +12,7 @@ public class MenuStatus {
         StatusManager statusManager = StatusManager.getInstance(scanner);
         int choice;
         do {
-            System.out.println("Menu");
+            System.out.println("Menu---------------------------------------------------------------");
             System.out.println("1. Add status");
             System.out.println("2. Update status");
             System.out.println("3. Display all status");

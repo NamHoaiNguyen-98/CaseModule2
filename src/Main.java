@@ -26,12 +26,13 @@ public class Main {
                     if (accountManager.login()) {
                         if (accountManager.checkLogin()) {
                             menuAdmin.menu(productManager);
+                            break;
                         }
                         else {
                             menuUser.menu(productManager);
+                            break;
                         }
                     }
-                    break;
                 case 2:
                     accountManager.register();
                     break;

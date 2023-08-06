@@ -14,7 +14,7 @@ public class CategoryManager implements ICategory, Serializable {
     private final Scanner scanner;
     private static CategoryManager categoryManager;
     private final String path = "D:\\CaseModule2\\src\\file\\Category";
-    private final String regex = "^[a-zA-Z0-9\\s]+$";
+    private final String regex = "^[a-zA-Z0-9À-ỹ ]*$";
 
     private CategoryManager(Scanner scanner) {
         this.scanner = scanner;

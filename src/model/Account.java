@@ -10,6 +10,11 @@ public class Account implements Serializable {
 
         public Account() {
         }
+    public Account(String username, String password) {
+        this.isLogin = false;
+        this.username = username;
+        this.password = password;
+    }
 
         public boolean isLogin() {
             return isLogin;
@@ -19,11 +24,7 @@ public class Account implements Serializable {
             isLogin = login;
         }
 
-        public Account(String username, String password) {
-            this.isLogin = false;
-            this.username = username;
-            this.password = password;
-        }
+
 
         public String getUsername() {
             return username;
@@ -43,9 +44,8 @@ public class Account implements Serializable {
 
         @Override
         public String toString() {
-            return "Account{" +
-                    "username='" + username + '\'' +
-                    ", password='" + password + '\'' +
-                    '}';
+            return
+                    "username='" + username
+                    ;
         }
 }

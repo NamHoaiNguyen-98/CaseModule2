@@ -19,7 +19,7 @@ public class ProductManager implements IProduct, Serializable {
     private final List<Product> productList;
     private final String path = "D:\\CaseModule2\\src\\file\\Product";
     private static ProductManager productManager;
-    private final String regex = "^[a-zA-Z0-9\\s]+$";
+    String regex= "^.+$";
 
     private ProductManager(Scanner scanner) {
         this.scanner = scanner;
@@ -35,21 +35,31 @@ public class ProductManager implements IProduct, Serializable {
 
     private Product getProduct() {
         int id = getIdUp();
+        System.out.println("Choice Status by ID: ");
         StatusManager.getInstance(scanner).display();
         Status status = StatusManager.getInstance(scanner).findById();
         System.out.println("Input name: ");
         String name = Input.inputString(regex);
-        Configuration configuration = ConfigurationManager.getInstance(scanner).getConfiguration();
+        System.out.println("Input Cpu: ");
+        String cpu = Input.inputString(regex);
+        System.out.println("Input Ram: ");
+        String ram = Input.inputString(regex);
+        System.out.println("Input hardDrive: ");
+        String hardDrive = Input.inputString(regex);
+        System.out.println("Input cardVga: ");
+        String cardVga = Input.inputString(regex);
+        System.out.println("Input Screen: ");
+        String screen = Input.inputString(regex);
         System.out.println("Input color: ");
         String color = Input.inputString(regex);
         System.out.println("Input quantity: ");
         int quantity = Input.inputInt();
         System.out.println("Input price: ");
         double price = Input.inputDouble();
+        System.out.println("Choice Category by ID: ");
         CategoryManager.getInstance(scanner).display();
-        System.out.println("Input category: ");
         Category category = CategoryManager.getInstance(scanner).findById();
-        return new Product(id, status, name, configuration, color, quantity, price, category);
+        return new Product(id, status, name, cpu,ram,hardDrive,cardVga,screen,color, quantity, price, category);
     }
 
     @Override
@@ -59,7 +69,7 @@ public class ProductManager implements IProduct, Serializable {
                 || product.getQuantity() != 0
                 || product.getPrice() != 0.0) {
             productList.add(product);
-            System.out.println("Add success !");
+            System.out.println("Add product success !");
 
         } else {
             System.out.println("Add product failed");
@@ -69,12 +79,12 @@ public class ProductManager implements IProduct, Serializable {
 
     @Override
     public void update() {
-        System.out.println("Input id: ");
+        System.out.println("Input id product you want update: ");
         int id = Input.inputInt();
         Product product = findById(id);
         if (product != null) {
+            System.out.println("Choice New status by ID: ");
             StatusManager.getInstance(scanner).display();
-            System.out.println("Input New status: ");
             Status status = StatusManager.getInstance(scanner).findById();
             product.setStatus(status);
             System.out.println("Input New name: ");
@@ -82,7 +92,32 @@ public class ProductManager implements IProduct, Serializable {
             if (!name.isEmpty()) {
                 product.setName(name);
             }
-            ConfigurationManager.getInstance(scanner).update(id);
+            System.out.println("Input New Cpu: ");
+            String cpu = scanner.nextLine();
+            if (!cpu.isEmpty()) {
+                product.setCpu(cpu);
+            }
+            System.out.println("Input New Ram: ");
+            String ram = scanner.nextLine();
+            if (!ram.isEmpty()) {
+                product.setRam(ram);
+            }
+            System.out.println("Input New hardDrive: ");
+            String hardDrive = scanner.nextLine();
+            if (!hardDrive.isEmpty()) {
+                product.setHardDrive(hardDrive);
+            }
+            System.out.println("Input New cardVga: ");
+            String cardVga = scanner.nextLine();
+            if (!cardVga.isEmpty()) {
+                product.setCardVga(cardVga);
+            }
+            System.out.println("Input New Screen: ");
+            String screen = scanner.nextLine();
+            if (!screen.isEmpty()) {
+                product.setScreen(screen);
+            }
+
             System.out.println("Input color: ");
             String color = scanner.nextLine();
             if (!color.isEmpty()) {
@@ -98,11 +133,11 @@ public class ProductManager implements IProduct, Serializable {
             if (!price.isEmpty()) {
                 product.setPrice(Double.parseDouble(price));
             }
+            System.out.println("Choice New category by ID: ");
             CategoryManager.getInstance(scanner).display();
-            System.out.println("Input New category: ");
             Category category = CategoryManager.getInstance(scanner).findById();
             product.setCategory(category);
-            System.out.println("Update success !");
+            System.out.println("Update product success !");
         } else {
             System.out.println("Id does not exist");
         }
@@ -113,7 +148,7 @@ public class ProductManager implements IProduct, Serializable {
     @Override
     public void display() {
         if (!productList.isEmpty()) {
-            System.out.printf("%-5s%-13s%-25s%-25s%-12s%-13s%-32s%-22s%-13s%-12s%-15s%-20s"
+            System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
                     ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
             System.out.println();
             for (Product product : productList) {
@@ -140,10 +175,12 @@ public class ProductManager implements IProduct, Serializable {
     @Override
     public void deleteById() {
         if (!productList.isEmpty()) {
-            Product product = findById();
+            System.out.println("Input id you want delete: ");
+            int id = Input.inputInt();
+            Product product = findById(id);
             if (product != null) {
                 productList.remove(product);
-                System.out.println("Delete success ");
+                System.out.println("Delete product success! ");
             } else {
                 System.out.println("Id does not exist");
             }
@@ -156,12 +193,16 @@ public class ProductManager implements IProduct, Serializable {
 
     @Override
     public void displaySortByPrice() {
-        SortByPrice sort = new SortByPrice();
-        productList.sort(sort);
-        System.out.printf("%-5s%-13s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
+        SortByPrice price = new SortByPrice();
+        productList.sort(price);
+        System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
                 ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
-        System.out.println(productList);
+        System.out.println();
+        for (Product product : productList) {
+            System.out.println(product);
+        }
     }
+
 
     @Override
     public void displayMaxPrice() {
@@ -203,8 +244,8 @@ public class ProductManager implements IProduct, Serializable {
         System.out.println("Input name you want search: ");
         String name = Input.inputString(regex);
         if (name != null) {
-            System.out.printf("%-5s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
-                    ,"ID","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+            System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                    ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
             System.out.println();
             for (Product product : productList) {
                 if (product.getName().toLowerCase().contains(name.toLowerCase())) {
@@ -228,9 +269,9 @@ public class ProductManager implements IProduct, Serializable {
         if (min > max) {
             System.out.println("Please input again!");
         } else {
-//            System.out.printf("%-5s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
-//                    ,"ID","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
-//            System.out.println();
+            System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                    ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+            System.out.println();
             for (Product product : productList) {
                 if (product.getPrice() > min && product.getPrice() < max) {
                     System.out.println(product);
@@ -249,8 +290,8 @@ public class ProductManager implements IProduct, Serializable {
         System.out.println("Input color you want search");
         String color = Input.inputString(regex);
         if (color != null) {
-            System.out.printf("%-5s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
-                    ,"ID","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+            System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                    ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
             System.out.println();
             for (Product product : productList) {
                 if (product.getColor().toLowerCase().contains(color.toLowerCase())) {
@@ -269,8 +310,8 @@ public class ProductManager implements IProduct, Serializable {
         boolean flag = true;
         StatusManager.getInstance(scanner).display();
         Status status1 = StatusManager.getInstance(scanner).findById();
-        System.out.printf("%-5s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
-                ,"ID","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+        System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
         System.out.println();
         for (Product product : productList) {
             if (product.getStatus().getId() == status1.getId()) {
@@ -288,8 +329,8 @@ public class ProductManager implements IProduct, Serializable {
         boolean flag = true;
         CategoryManager.getInstance(scanner).display();
         Category category1 = CategoryManager.getInstance(scanner).findById();
-        System.out.printf("%-5s%-25s%-30s%-10s%-15s%-32s%-22s%-13s%-12s%-15s%-20s"
-                ,"ID","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+        System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
         System.out.println();
         for (Product product : productList) {
             if (product.getCategory().getId() == category1.getId()) {
@@ -312,6 +353,16 @@ public class ProductManager implements IProduct, Serializable {
         }
         return maxId + 1;
 
+    }
+
+    public void getProductList() {
+        ReadAndWriteFile.writeToFile(productList,path);
+    }
+
+    public void displaySortByID() {
+        SortByID id = new SortByID();
+        productList.sort(id);
+        ReadAndWriteFile.writeToFile(productList,path);
     }
     @Override
     public Product findById() {
