@@ -237,6 +237,27 @@ public class ProductManager implements IProduct, Serializable {
         }
 
     }
+    public void searchByConfiguration() {
+        boolean flag = true;
+        System.out.println("Input text you want search: ");
+        String configuration = Input.inputString(regex);
+        if (configuration != null) {
+            System.out.printf("\033[33;1m%-3s%-12s%-25s%-25s%-7s%-12s%-25s%-22s%-10s%-12s%-13s%-10s\033[0m"
+                    ,"ID","Status","Name","Cpu","Ram","HardDrive","CardVga","Screen","Color","Quantity","Price","Category");
+            System.out.println();
+            for (Product product : productList) {
+                if (product.getCpu().toLowerCase().contains(configuration.toLowerCase())
+                || product.getRam().toLowerCase().contains(configuration.toLowerCase())||product.getCardVga().toLowerCase().contains(configuration.toLowerCase())
+                || product.getHardDrive().toLowerCase().contains(configuration.toLowerCase()) || product.getScreen().toLowerCase().contains(configuration.toLowerCase())) {
+                    System.out.println(product);
+                    flag = false;
+                }
+            }
+            if (flag) {
+                System.out.println("Not exist product have name contains this word!");
+            }
+        }
+    }
 
     @Override
     public void searchByName() {
